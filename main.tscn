@@ -1,0 +1,75 @@
+[gd_scene load_steps=12 format=3 uid="uid://dxxknpuxits8e"]
+
+[ext_resource type="Script" path="res://character_body_2d.gd" id="1_cgv4d"]
+[ext_resource type="Shader" path="res://bubble.gdshader" id="2_ymjnt"]
+[ext_resource type="Texture2D" uid="uid://b8xhj8ew0q030" path="res://images/floortest.png" id="3_gwmio"]
+[ext_resource type="Texture2D" uid="uid://ppsm0h801mky" path="res://Bubble_Buddy_Idle_1.png" id="4_xjmxi"]
+[ext_resource type="Texture2D" uid="uid://df8u1c5mfd57g" path="res://Bubble_Buddy_Idle_2.png" id="5_sr4ih"]
+[ext_resource type="Texture2D" uid="uid://mhcm3do0u6jo" path="res://Bubble_Buddy_Idle_3.png" id="6_ny4rv"]
+[ext_resource type="Texture2D" uid="uid://c2qvbkhv3v4hs" path="res://Bubble_Buddy_Idle_4.png" id="7_kct0s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rt1b6"]
+size = Vector2(1100.91, 1613.66)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1hupd"]
+shader = ExtResource("2_ymjnt")
+shader_parameter/time = null
+shader_parameter/base_intensity = 0.01
+shader_parameter/movement_intensity = 0.1
+shader_parameter/squish_intensity = 0.5
+shader_parameter/velocity = null
+shader_parameter/squish_factor = null
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0slmu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_xjmxi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_sr4ih")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ny4rv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_kct0s")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_akqwf"]
+size = Vector2(1364.5, 13)
+
+[node name="Main" type="Node2D"]
+position = Vector2(127, 449)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+position = Vector2(-12, 288)
+script = ExtResource("1_cgv4d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(19, -114)
+scale = Vector2(0.132618, 0.132618)
+shape = SubResource("RectangleShape2D_rt1b6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+material = SubResource("ShaderMaterial_1hupd")
+position = Vector2(19, -119)
+scale = Vector2(0.20625, 0.20625)
+sprite_frames = SubResource("SpriteFrames_0slmu")
+animation = &"idle"
+frame_progress = 0.666615
+
+[node name="Floor" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(556.75, 299.5)
+shape = SubResource("RectangleShape2D_akqwf")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor"]
+position = Vector2(556.125, 303.5)
+scale = Vector2(1.25718, 0.38)
+texture = ExtResource("3_gwmio")
